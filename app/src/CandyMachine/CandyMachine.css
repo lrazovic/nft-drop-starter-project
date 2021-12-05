@@ -6,6 +6,8 @@
 .gif-container {
   display: flex;
   flex-direction: column;
+  background-color: #282828;
+  border-radius: 16px;
 }
 
 .gif-grid {
@@ -23,6 +25,15 @@
   position: relative;
   justify-self: center;
   align-self: center;
+  border-radius: 16px;
+  background-color: hsl(0deg 0% 0% / 0.25);
+  box-shadow:
+  0 1px 1px hsl(0deg 0% 0% / 0.075),
+  0 2px 2px hsl(0deg 0% 0% / 0.075),
+  0 4px 4px hsl(0deg 0% 0% / 0.075),
+  0 8px 8px hsl(0deg 0% 0% / 0.075),
+  0 16px 16px hsl(0deg 0% 0% / 0.075)
+;
 }
 
 .gif-item img {
