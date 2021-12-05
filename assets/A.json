@@ -1,0 +1,19 @@
+{
+    "name": "A //Alphabet",
+    "symbol": "SQAURE",
+    "image": "A.png",
+    "properties": {
+      "files": [
+        {
+          "uri": "A.png",
+          "type": "image/png"
+        }
+      ],
+      "creators": [
+        {
+          "address": "3pNLJfs6CrWLRA429zx2Dh3JpSoGz3SzbaJuXZqRtxvp",
+          "share": 100
+        }
+      ]
+    }
+  }
