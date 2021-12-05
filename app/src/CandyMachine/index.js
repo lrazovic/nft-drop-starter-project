@@ -28,6 +28,7 @@ const CandyMachine = ({ walletAddress }) => {
 
   // Add state property inside your component like this
   const [machineStats, setMachineStats] = useState(null);
+  const [mints, setMints] = useState([]);
 
   // Actions
   const fetchHashTable = async (hash, metadataEnabled) => {
@@ -300,17 +301,43 @@ const CandyMachine = ({ walletAddress }) => {
       goLiveDateTimeString,
     });
 
-    console.log({
-      itemsAvailable,
-      itemsRedeemed,
-      itemsRemaining,
-      goLiveData,
-      goLiveDateTimeString,
-    });
+    const data = await fetchHashTable(
+      process.env.REACT_APP_CANDY_MACHINE_ID,
+      true
+    );
+
+    if (data.length !== 0) {
+      for (const mint of data) {
+        // Get URI
+        const response = await fetch(mint.data.uri);
+        const parse = await response.json();
+        console.log("Past Minted NFT", mint)
+
+        // Get image URI
+        if (!mints.find((mint) => mint === parse)) {
+          setMints((prevState) => [...prevState, parse]);
+        }
+      }
+    }
   };
 
+  const renderMintedItems = () => (
+    <div className="gif-container">
+      <p className="sub-text">Minted Items ✨</p>
+      <div className="gif-grid">
+        {mints.map((mint) => (
+          <div className="gif-item" key={mint.image}>
+            <figure>
+              <img src={mint.image} alt={`Minted NFT ${mint.name}`} />
+              <figcaption>Name: {mint.name}</figcaption>
+            </figure>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
-    // Only show this if machineStats is available
     machineStats && (
       <div className="machine-container">
         <p>{`Drop Date: ${machineStats.goLiveDateTimeString}`}</p>
@@ -318,6 +345,8 @@ const CandyMachine = ({ walletAddress }) => {
         <button className="cta-button mint-button" onClick={mintToken}>
           Mint NFT
         </button>
+        {/* If we have mints available in our array, let's render some items */}
+        {mints.length > 0 && renderMintedItems()}
       </div>
     )
   );
